@@ -1,0 +1,49 @@
+footer{
+    background-color: black;
+}
+
+/*.carousel {*/
+    /*!*height: 66vh;*!*/
+    /*!*height:100%;*!*/
+    /*width: 100%;*/
+    /*overflow:hidden;*/
+/*}*/
+/*.carousel .carousel-inner {*/
+    /*height:100%;*/
+    /*width: 100%;*/
+/*}*/
+
+body{
+
+}
+
+textarea {
+    resize: none;
+}
+
+/*--------------------------------------------------*/
+/*for select option*/
+.placeholder{color: grey;}
+select option:first-child{color: grey; display: none;}
+select option{color: #555;}
+
+/*------------------------------------------------*/
+
+/*.container {*/
+
+    /*min-height:250px !important;*/
+/*}*/
+
+#app {
+    min-height:510px ;
+}
+
+
+
+img{
+    max-width: 100%;
+}
+
+.gallery-img{
+margin-bottom: 1em;
+}
