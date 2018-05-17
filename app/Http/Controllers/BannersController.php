@@ -9,6 +9,7 @@ use Auth;
 use App\Banner;
 use App\Http\Flash;
 use App\Http\Requests\BannerRequest;
+use App\Http\Requests\ChangeBannerRequset;
 //use Faker\Provider\Image;
 use App\Photo;
 use Illuminate\Http\Request;
@@ -28,8 +29,8 @@ class BannersController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
-    use AuthorizesUser;
+//this is my trait
+//    use AuthorizesUser;
 
 
 //
@@ -197,11 +198,11 @@ class BannersController extends Controller
 
 
 //--------------------189
-    public function addPhotos($zip, $street, Request $request)
+    public function addPhotos($zip, $street, ChangeBannerRequset $request)
     {
-        $request->validate([
-            'file' => 'required|mimes:jpg,jpeg,png,bmp'
-        ]);
+//        $request->validate([
+//            'file' => 'required|mimes:jpg,jpeg,png,bmp'
+//        ]);
 
 
 
@@ -213,10 +214,11 @@ class BannersController extends Controller
 //    1.             if ($banner->user_id !== auth()->id()) {
 //    2. in model     if (!$banner->ownerBy(auth()->user()))
 //    3.trait
-        if (! $this->userCreateBanner($request)) {
-            return $this->unAuthorized($request);
-        }
+//        if (! $this->userCreateBanner($request)) {
+//            return $this->unAuthorized($request);
+//        }
 
+        //4.with ChangeBannerRequest
         $photo = $this->makePhoto($request->file('file'));
         $banner = Banner::locatedAt($zip, $street);
         $banner->addPhoto($photo);

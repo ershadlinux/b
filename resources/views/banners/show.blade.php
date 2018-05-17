@@ -35,6 +35,25 @@
                     @endforeach
                 </div>
             @endforeach
+
+
+
+
+{{--                @if(Auth::check())--}}
+                    {{--@if(auth()->check())--}}
+                    @if(auth()->user()->id==$banner->id)
+                    <h5>Add Your Photo</h5>
+
+                    {{--<form class="dropzone" action="/{{$banner->zip}}/{{$banner->street}}/photos" method="POST">--}}
+                    <form class="dropzone" id="addPhotosForm" action="{{route('store_photo_path',[$banner->zip,$banner->street])}}"
+                          method="POST">
+                        {{csrf_field()}}
+
+                    </form>
+                @endif
+
+
+
         </div>
 
 
@@ -51,18 +70,8 @@
     <br>
 
 
-    <hr>
-    @if(Auth::check())
-        {{--@if(auth()->check())--}}
-        <h2>Add Your Photo</h2>
+    {{--<hr>--}}
 
-        {{--<form class="dropzone" action="/{{$banner->zip}}/{{$banner->street}}/photos" method="POST">--}}
-        <form class="dropzone" id="addPhotosForm" action="{{route('store_photo_path',[$banner->zip,$banner->street])}}"
-              method="POST">
-            {{csrf_field()}}
-
-        </form>
-    @endif
 
 
 
