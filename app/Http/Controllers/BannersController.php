@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Traits\AuthorizesUsers;
 use Auth;
-
+use Illuminate\Support\Facades\Input;
+//use Illuminate\Support\Facades\Input as input;
 
 use App\Banner;
 use App\Http\Flash;
@@ -17,6 +18,8 @@ use Session;
 use Intervention\Image\ImageManagerStatic as Image;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+//use Symfony\Component\HttpFoundation\File;
+
 
 use App\Http\Controllers\Traits\AuthorizesUser;
 
@@ -55,7 +58,7 @@ class BannersController extends Controller
     public function __construct()
     {
 
-//        parent::__construct();
+        parent::__construct();
 
 
 //        $this->middleware('auth', ['only' => ['create']]);
@@ -107,11 +110,46 @@ class BannersController extends Controller
 //            'street' => 'required|unique:posts|max:255',
 //        ]);
 
+//        $this->validate($request, [
+//            'street' => 'required|unique:posts|max:255',
+//        ]);
+
+
 
         //2.store in db
-        auth()->id();
-        \App\Banner::create($request->all());//
+//       dd( auth()->id());
+        //print_r(Auth()->user());
+//        Post::create([
+//            'body' => request('body'),
+//            'title' => request('title'),
+//            'user_id' => auth()->id()
+//        ]);
+
+
+//        \App\Banner::create($request->all());//
+
+//        Auth::user()->bannners()->save(new Banner($request->all()));
+       $banner= auth()->user()->publish(
+            new Banner($request->all())
+        );
+
         flash()->success("Title", "Your Banner has been created");
+
+
+////        $input = Input::except(['_token']);
+////        $input['is_published'] = $request->has('is_published');
+//        $input['user_id'] = auth()->id();
+//        Banner::create($input);
+
+
+
+
+
+
+
+
+
+//        return redirect()->route('pages.index')->with('success', 'Your item was successfully stored!');
 
 //        flash()->overlay("Hello World","Wellcome To Bongah" );
 //        flash("Hello World","Wellcome To Bongah" );
@@ -124,7 +162,13 @@ class BannersController extends Controller
 
 
         //3.redirect
-        return back();
+//        return back();
+//return redirect($request->zip);
+
+
+return redirect($banner->zip.'/'.str_replace(' ','-',$banner->street));
+//                return redirect()->route("/".$request->zip)->with('success', 'Your item was successfully stored!');
+
 
 
     }
@@ -205,8 +249,6 @@ class BannersController extends Controller
 //        ]);
 
 
-
-
 //        $banner = Banner::locatedAt($zip, $street);
 
 
@@ -217,25 +259,28 @@ class BannersController extends Controller
 //        if (! $this->userCreateBanner($request)) {
 //            return $this->unAuthorized($request);
 //        }
+//Note:if you uses trait or extend class you must use $this for access method or properti
+        //but for class is had add  you must create object from class example $photo->
+
 
         //4.with ChangeBannerRequest
-        $photo = $this->makePhoto($request->file('file'));
+//        $photo = $this->makePhoto($request->file('file'));
+
+        $photo = Photo::formFrom($request->file('file'))->upload();
+
         $banner = Banner::locatedAt($zip, $street);
         $banner->addPhoto($photo);
 
 
-
     }
 
 
-    protected function makePhoto(UploadedFile $file)
-    {
-//         return Photo::formFrom($file)->store($file);
-        return Photo::named($file->getClientOriginalName())->move($file);
-
-    }
-
-
+//    protected function makePhoto(UploadedFile $file)
+//    {
+////         return Photo::formFrom($file)->store($file);
+//        return Photo::named($file->getClientOriginalName())->move($file);
+//
+//    }
 
 
 //    public function addPhotos($zip, $street, Request $request)

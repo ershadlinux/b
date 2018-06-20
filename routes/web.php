@@ -65,7 +65,10 @@ Route::post('{zip}/{street}/photos',[
 
 ]);
 
+Route::get('/error', function () {
+    return view('error');
 
+});
 
 
 

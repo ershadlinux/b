@@ -1,8 +1,10 @@
 <?php
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use App\Photo;
+use App\User;
 
 class Banner extends Model
 {
@@ -20,6 +22,13 @@ class Banner extends Model
     {
         return $this->hasmany(Photo::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
 
     public function ownerBy(User $user){
         return $this->user_id == $user->id;
@@ -52,13 +61,20 @@ class Banner extends Model
     {
         $street = str_replace('-', ' ', $street);
 //        return self::where(compact('zip', 'street'));
-        return static::where(compact('zip', 'street'))->first();
-         //        return static::where(compact('zip', 'street'));
+
+            return static::where(compact('zip', 'street'))->first();
+            //        return static::where(compact('zip', 'street'));
+
+
+
+//        catch (Exception $e) {
+//            $e="hi";
+//            return view('error', compact('e'));
+////            return $e->getMessage();
+//
+//
+//        }
     }
-
-
-
-
 
 
 

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Beta\B;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -32,4 +33,25 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function bannners(){
+        return $this->hasMany(Banner::class);
+    }
+
+
+    /**
+     * @param $relation
+     * @return bool
+     */
+    public function owns($relation){
+        return $relation->user_id == $this->id;
+    }
+
+
+
+ public function publish(Banner $banner) {
+      return  $this->bannners()->save($banner);
+ }
+
+
 }

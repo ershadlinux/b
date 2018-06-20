@@ -16,10 +16,30 @@ class Controller extends BaseController
     /**
      * Controller constructor.
      */
+    protected $user;
     public function __construct()
     {
-    view()->share('signeIn',Auth::check());
-    view()->share('user',auth()->user());
-    view()->share('guest',auth()->guest());
+//    view()->share('signeIn',Auth::check());
+//    view()->share('user',auth()->user());
+//    view()->share('user',\Auth::user());
+//    view()->share('guest',auth()->guest());
+
+
+
+//
+//        $this->middleware(function ($request, $next) {
+//            $this->user = Auth::user();
+//            view()->share('user', $this->user);
+//            return $next($request);
+//        });
+
+
+        $this->middleware(function ($request, $next) {
+            view()->share('user', Auth::user());
+            return $next($request);
+        });
+
+
+
     }
 }

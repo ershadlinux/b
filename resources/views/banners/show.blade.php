@@ -37,11 +37,12 @@
             @endforeach
 
 
-
-
-{{--                @if(Auth::check())--}}
+{{--{{ $userauth()->user()->id)}}--}}
+{{--{{dd($user)}}--}}
+                @if(Auth::check() && $user->owns($banner))
+{{--                @if(Auth::check() && auth()->user()->id==$banner->user_id)--}}
                     {{--@if(auth()->check())--}}
-                    @if(auth()->user()->id==$banner->id)
+{{--                    @if(auth()->user()->id==$banner->user_id)--}}
                     <h5>Add Your Photo</h5>
 
                     {{--<form class="dropzone" action="/{{$banner->zip}}/{{$banner->street}}/photos" method="POST">--}}
